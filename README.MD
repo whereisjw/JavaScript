@@ -97,4 +97,76 @@ const person2 = {
 
 #### const tcar=objcet.assign({},car)는 memory heap에서 같은 구조를 가진 다른 주소 값을 reference한다
 
+```
+const empty1 = {};
+const empty2 = {};
+
+console.log(empty1 == empty2);
+console.log(empty1 === empty2);
+
+const obj1 = {a : 100};
+const obj2 = {a : 100};
+
+console.log(obj1 == obj2);
+console.log(obj1 === obj2);
+```
+
+#### 결과 값
+
+false
+false
+false
+false
+
+# 배열
+
+```
+const bookList = ["html", "css", "javascript"];
+
+console.log("length = " + bookList.length);
+console.log("bookList[0] = " + bookList[0]);
+console.log("bookList[1] = " + bookList[1]);
+console.log("bookList[2] = " + bookList[2] + "\n");
+
+//for문을 이용한 출력(정확한 반복횟수를 알고 있을떄 사용)
+for (book of bookList) console.log("book = " + book);
+
+//배열 마지막에 새로운 값 추가
+bookList.push("react");
+console.log(bookList);
+
+//배열 마지막 값 삭제
+bookList.pop();
+console.log(bookList);
+
+//배열 시작값에서 하나를 삭제
+bookList.shift();
+console.log(bookList);`
+```
+
+# type of
+
+```
+var str = "hello";
+var num = 100;
+var arr = [1,2,3,4,5];
+var obj = {name:"홍길동"};
+
+console.log("typeof : " + typeof(str));
+console.log("typeof : " + typeof(num));
+console.log("typeof : " + typeof(arr));
+console.log("typeof : " + typeof(obj));
+console.log("typeof : " + typeof(null));
+```
+
+#### typeof : string
+
+#### typeof : number
+
+#### typeof : object
+
+#### typeof : object
+
+#### typeof : object
+
 #### 출저 : http://github.com/TJG404

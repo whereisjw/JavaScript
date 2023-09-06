@@ -1,30 +1,32 @@
-const car = {
-  wheels: 4,
+/** greet 함수 */
+function greet(name) {
+  console.log("hello~ " + name);
+}
+
+greet("홍길동\n");
+
+/** value 증가 함수 */
+var myInt = 1;
+function increase(value) {
+  return (value += 1);
+}
+
+console.log("myInt : " + myInt); //1
+console.log("increase(myInt) : " + increase(myInt)); //2
+console.log("myInt : " + myInt + "\n"); //1
+
+/** 객체를 매개변수로 받는 함수 */
+const myCar = {
+  maker: "bmw",
   color: "red",
-  drive: function () {
-    console.log("wroom wroom");
-  },
 };
 
-console.log(Object.keys(car)[0]);
-console.log(typeof Object.keys(car)[0]);
-console.log("car.wheels : " + car.wheels);
-console.log("car.color : " + car.color);
-car.drive();
+function changeColor(car) {
+  car.color = "blue";
+}
 
-/* hong,kim,park  */
-const person = { name: "홍길동", age: 20 }; //person.name    홍길동
+console.log(myCar);
+changeColor(myCar); //color 변경
+console.log(myCar);
 
-const person2 = {
-  hong: { name: "홍길동", age: 20 },
-  kim: { name: "김길동", age: 30 },
-  park: { name: "박길동", age: 40 },
-}; //person.hong.name 홍길동
-
-const person3 = {
-  plist: [
-    { name: "홍길동", age: 20 },
-    { name: ["김길동", "김철수"], age: 30 },
-    { name: "박길동", age: 40 },
-  ],
-}; //person.hong.name 홍길동
+/* 호이스팅?  */
