@@ -1,334 +1,309 @@
-# 자바스크립트란?
+# kobis api (1/2)
 
----
+#### json 파일 정렬
 
-#### 자바스크립트는 (1) 언어이다.
-
-#### (1)언어는 (2)파일에 include하여 실행된다.
-
-#### (2)파일이 실행하는 환경은(3)이다.
-
-#### (3)에서 (1)이 실행되는 이유는 (4)을 탑재하고 있기 때문이다.
-
-#### (4)의 실행방식은(5)이다.
-
-#### (5)는 런타임시 한줄씩 코드를 읽어서 바로 실행한다.
-
-#### (1)script
-
-#### (2)html
-
-#### (3)web browser
-
-#### (4)엔진
-
-#### (5)인터프리터
-
-# node js 설치
-
-![Alt text](img/image.png)
-
-node js lts 버전으로 설치
-
----
-
-![Alt text](img/image-1.png)
-
-설치완료 후 터미널에서 node -v 명령어로 버전확인가능
-
-터미널에서 node 파일명.js 로 연결가능
-
----
-
-# var - function scope variable
+![Alt text](image.png)
 
 ```
-for (var i = 0; i < 10; i++) {
-  var leak = "I am available outside of the loop";
-}
-console.log(i);
-console.log(leak);
-
-function myfunction() {
-  var fscope = "I am available inside this function";
-  console.log(fscope);
-}
-console.log(fscope); //에러 발생, 함수 스코프 영역을 벗어남
-```
-
-#### 함수 {}중괄호 안에 설정된 변수는 함수 안에서 지역변수로 선언되어 밖에서 호출이 되지 않는다.
-
-```
-  var fscope = "I am available inside this function";
-function myfunction() {
-  console.log(fscope);
-}
-console.log(fscope); //에러 안남
-```
-
-```
-<!-- let - block scope variable  -->
-let x = "global";
-if (x === "global") {
-  let x = "block";
-  console.log(x); //block-scope
-}
-console.log(x); //global-scope
-
-<!--  var - function scope variable -->
-var y = "global";
-if (y === "global") {
-  var y = "block-scope";
-  console.log(y); //"block-scope"
-}
-console.log(y); //"block-scope"
-```
-
----
-
-```
-/** const - block scope variable */
-const z = "I am a constant";
-//z = "I can't be reassign";
-
-console.log(z);
-
-/** const - 객체 정의 */
-const person = {
-    name : "홍길동",
-    age : 30
+const kobis = {
+  boxOfficeResult: {
+    boxofficeType: "일별 박스오피스", //kobis.boxOfficeResult.boxofficeType
+    showRange: "20230906~20230906", //kobis.boxOfficeResult.showRange
+    dailyBoxOfficeList: [
+      {
+        rnum: "1",
+        rank: "1", //kobis.boxOfficeResult.dailyBoxOfficeList[i].rank
+        rankInten: "25",
+        rankOldAndNew: "OLD",
+        movieCd: "20224667",
+        movieNm: "잠", //kobis.boxOfficeResult.dailyBoxOfficeList[0].movieNm
+        openDt: "2023-09-06",
+        salesAmt: "735086507",
+        salesShare: "44.9",
+        salesInten: "733556507",
+        salesChange: "47944.9",
+        salesAcc: "814820407",
+        audiCnt: "79435",
+        audiInten: "79265",
+        audiChange: "46626.5",
+        audiAcc: "87543",
+        scrnCnt: "1072",
+        showCnt: "4947",
+      },
+      {
+        rnum: "2",
+        rank: "2",
+        rankInten: "-1",
+        rankOldAndNew: "OLD",
+        movieCd: "20226431",
+        movieNm: "오펜하이머",
+        openDt: "2023-08-15",
+        salesAmt: "209727019",
+        salesShare: "12.8",
+        salesInten: "-21184712",
+        salesChange: "-9.2",
+        salesAcc: "30316354087",
+        audiCnt: "19831",
+        audiInten: "-2577",
+        audiChange: "-11.5",
+        audiAcc: "2841435",
+        scrnCnt: "879",
+        showCnt: "2367",
+      },
+      {
+        rnum: "3",
+        rank: "3",
+        rankInten: "0",
+        rankOldAndNew: "OLD",
+        movieCd: "20226500",
+        movieNm: "달짝지근해: 7510",
+        openDt: "2023-08-15",
+        salesAmt: "125541095",
+        salesShare: "7.7",
+        salesInten: "-27331297",
+        salesChange: "-17.9",
+        salesAcc: "11338836912",
+        audiCnt: "13662",
+        audiInten: "-2967",
+        audiChange: "-17.8",
+        audiAcc: "1165302",
+        scrnCnt: "697",
+        showCnt: "1841",
+      },
+      {
+        rnum: "4",
+        rank: "4",
+        rankInten: "-2",
+        rankOldAndNew: "OLD",
+        movieCd: "20233014",
+        movieNm: "타겟",
+        openDt: "2023-08-30",
+        salesAmt: "118797823",
+        salesShare: "7.3",
+        salesInten: "-67443709",
+        salesChange: "-36.2",
+        salesAcc: "2963671983",
+        audiCnt: "12990",
+        audiInten: "-7053",
+        audiChange: "-35.2",
+        audiAcc: "314638",
+        scrnCnt: "766",
+        showCnt: "2125",
+      },
+      {
+        rnum: "5",
+        rank: "5",
+        rankInten: "-1",
+        rankOldAndNew: "OLD",
+        movieCd: "20204264",
+        movieNm: "콘크리트 유토피아",
+        openDt: "2023-08-09",
+        salesAmt: "114860158",
+        salesShare: "7.0",
+        salesInten: "-28954320",
+        salesChange: "-20.1",
+        salesAcc: "35719917721",
+        audiCnt: "12362",
+        audiInten: "-3041",
+        audiChange: "-19.7",
+        audiAcc: "3657632",
+        scrnCnt: "717",
+        showCnt: "2012",
+      },
+      {
+        rnum: "6",
+        rank: "6",
+        rankInten: "0",
+        rankOldAndNew: "NEW",
+        movieCd: "20090379",
+        movieNm: "해리 포터와 혼혈 왕자",
+        openDt: "2009-07-15",
+        salesAmt: "70743500",
+        salesShare: "4.3",
+        salesInten: "70743500",
+        salesChange: "100",
+        salesAcc: "20338227500",
+        audiCnt: "6339",
+        audiInten: "6339",
+        audiChange: "100",
+        audiAcc: "2964075",
+        scrnCnt: "41",
+        showCnt: "214",
+      },
+      {
+        rnum: "7",
+        rank: "7",
+        rankInten: "-2",
+        rankOldAndNew: "OLD",
+        movieCd: "20218541",
+        movieNm: "밀수",
+        openDt: "2023-07-26",
+        salesAmt: "37207927",
+        salesShare: "2.3",
+        salesInten: "-25159483",
+        salesChange: "-40.3",
+        salesAcc: "49166017434",
+        audiCnt: "3991",
+        audiInten: "-2698",
+        audiChange: "-40.3",
+        audiAcc: "5089666",
+        scrnCnt: "420",
+        showCnt: "626",
+      },
+      {
+        rnum: "8",
+        rank: "8",
+        rankInten: "0",
+        rankOldAndNew: "NEW",
+        movieCd: "20211540",
+        movieNm: "듣보인간의 생존신고",
+        openDt: "2023-09-06",
+        salesAmt: "32409900",
+        salesShare: "2.0",
+        salesInten: "32409900",
+        salesChange: "100",
+        salesAcc: "42978900",
+        audiCnt: "3503",
+        audiInten: "3503",
+        audiChange: "100",
+        audiAcc: "4788",
+        scrnCnt: "72",
+        showCnt: "97",
+      },
+      {
+        rnum: "9",
+        rank: "9",
+        rankInten: "-3",
+        rankOldAndNew: "OLD",
+        movieCd: "20228930",
+        movieNm: "엘리멘탈",
+        openDt: "2023-06-14",
+        salesAmt: "20281885",
+        salesShare: "1.2",
+        salesInten: "-10305296",
+        salesChange: "-33.7",
+        salesAcc: "70145608677",
+        audiCnt: "2202",
+        audiInten: "-1026",
+        audiChange: "-31.8",
+        audiAcc: "7138995",
+        scrnCnt: "247",
+        showCnt: "317",
+      },
+      {
+        rnum: "10",
+        rank: "10",
+        rankInten: "5",
+        rankOldAndNew: "OLD",
+        movieCd: "20231253",
+        movieNm: "일주일간 친구",
+        openDt: "2023-09-06",
+        salesAmt: "17372250",
+        salesShare: "1.1",
+        salesInten: "15230250",
+        salesChange: "711",
+        salesAcc: "98192250",
+        audiCnt: "1936",
+        audiInten: "1630",
+        audiChange: "532.7",
+        audiAcc: "8009",
+        scrnCnt: "133",
+        showCnt: "321",
+      },
+    ],
+  },
 };
 
-person.age = 35;
-console.log(person.age);
-```
+//일별 박스오피스 출력 - 영화순위,영화제목, 개봉일,누적관객수,누적매출액
+let movieList = kobis.boxOfficeResult.dailyBoxOfficeList;
+let movieBox = document.querySelector(".movie-box");
+movieList.map((v) => {
+  let { rank, movieNm, openDt, audiAcc, salesAcc, rankOldAndNew, rankInten } = v;
+  let newOld = rankOldAndNew == "NEW" ? "신규" : "기존";
+  let rankUpDown = rankInten > 0 ? `+${rankInten}` : `${rankInten}`;
 
----
-
-# const
-
-```
-/** const - block scope variable */
-const z = "I am a constant";
-//z = "I can't be reassign";
-
-console.log(z);
-
-/** const - 객체 정의 */
-const person = {
-    name : "홍길동",
-    age : 30
-};
-
-person.age = 35;
-console.log(person.age);
-```
-
-아래 const 객체 const person은 callstack에 {} 중괄 호안의 값에 주소값을 갖고 존재한다.
-중괄호 안의 값은 M.H에 존재하게 된다.
-
----
-
-# TDZ(Temporal Dead Zone)
-
-```
-name;
-console.log(i); //선언과 초기화됨 (es5문법)
-var i = "I am a var";
-
-console.log(j); //초기화 x var선언이면 undefine
-let j = "I am a let"; //ReferenceError: Cannot access 'j' before initialization
-```
-
-es6문법에서는 var 비선호 let 과 const를 사용할것
-
----
-
-# ES5 function syntax
-
-```
-function greeting1(name) {
-  return "greeting1 : hello~" + name;
-}
-```
-
-es5에서는 'function'키워드가 있으면 heap에 저장된다고 간주, 화살표 함수도 같은 방식으로 저장
-
-```
-const greeting2 = function (name) {
-  return "greeting2 : hello~" + name;
-};
-
-var greeting3 = (name) => {
-  return "greeting3 : hello~" + name;
-};
-
-var greeting4 = () => {
-  return "greeting4 : hello~";
-};
-```
-
-{} 중괄호 안은 memory heap에 저장
-
-#### 함수의 명시적 호출
-
-console.log(greeting1("홍길동"));
-console.log(greeting2("홍길동"));
-console.log(greeting3("홍길동"));
-console.log(greeting4());
-
-# es5,es6 default value
-
-#### ES5 function default value
-
----
-
-function getLocation(city, country, continent) {
-//식별자 앞에 아무것도 없으면 var랑 같음
-if (typeof country === "undefined") {
-country = "Italy";
-}
-if (typeof continent === "undefined") {
-continent = "Europe";
-}
-console.log(continent, country, city);
-}
-
-getLocation("Milano");
-getLocation("Paris", "France");
-console.log("\n");
-
----
-
----
-
-#### ES6 function default value
-
----
-
-function getLocation2(city, country = "Italy", continent = "Europe") {
-console.log(continent, country, city);
-}
-
-getLocation2("Milano");
-getLocation2("Paris", "France");
-
-# TemlateLiteral
-
-#### 중첩 템플릿
-
----
-
-배열은 동일한 데이터타입을 물리적으로 연속된 저장소에 저장한다.
-
-```
-const people = [
-  { name: "홍길동", age: 27 },
-  { name: "홍홍", age: 27 },
-  { name: "홍길순", age: 31 },
-];
-
-const markup = `
-<ul>
-    ${people.map((person) => `<li> ${person.name} </li>`)}
-</ul>
-`;
-console.log(markup);
-```
-
----
-
----
-
-#### 삼항 연산자 추가하기 1
-
----
-
-```
-const isDiscounted = false;
-
-function getPrice() {
-  console.log(isDiscounted ? "$10" : "$20");
-}
-
-getPrice();
-```
-
-#### 삼항 연산자 추가하기 2
-
-```
-const artist = {
-  //name, age와 함께 artist 객체 생성
-  name: "잔나비",
-  age: 20,
-  song: "주저하는 연인들을 위해",
-};
-
-//artist 객체에 song 프로퍼티가 있을 때만 문장에 추가하고,
-//없으면 아무것도 반환하지 않음
-const text = `
-    <div>
-        <p>${artist.name} : ${artist.age}살 </p>
-        ${artist.song ? `<p>대표곡 :  ${artist.song}</p>` : ""}
+  return movieBox.insertAdjacentHTML(
+    "beforeend",
+    `
+    <div class="card" style="width: 18rem;">
+    <p class="card-img-top">${kobis.boxOfficeResult.boxofficeType}</p>
+    <div class="card-body">
+      <h5 class="card-title"><strong>${newOld} ${rank}위</strong>(${rankUpDown})</h5>
+     <h4 class='title-line'> ${movieNm}</h4>
+      <p class="card-text"><p><strong>개봉일</strong> : ${openDt}</p>
+    <p><strong>누적관객</strong> : ${audiAcc}명</p>
+      <p><strong>누적매출</strong> : ${salesAcc}원</p></p>
+      <a href="#" class="btn btn-primary">영화상세보기</a>
     </div>
-`;
-console.log(text);
-```
-
-# 템플릿 리터럴에 함수 전달하기
-
-```
-const groceries = {
-  meat: "pork chop",
-  veggie: "salad",
-  fruit: "apple",
-  others: ["murshrooms", "instant noodles", "instant soup"],
-};
-
-//groceries의 각  값에 대해 map()을 수행하는 함수
-function groceryList(others) {
-  return `
-      <p>
-      ${others.map(
-        (abc) => `<div>
-        <p>${abc}</p>
-        </div>`
-      )}.join('\n')
-      </p>
-  `;
-}
-/*  ${others.map((other) => `<span>${other}</span>`).join("\n")} */
-
-//p 태그 내  모든 groceries를 출력. 마지막은 **others** 배열의 모든 원소를 포함
-const markup = `
-  <div>
-      <p>${groceries.meat}</p>
-      <p>${groceries.veggie}</p>
-      <p>${groceries.fruit}</p>
-      <p>${groceryList(groceries.others)}</p>
   </div>
-`;
+  `
+  );
+});
 
-console.log(markup);
+document.querySelectorAll(".btn").forEach((v) => {
+  v.addEventListener("click", () => {
+    alert("연습용 페이지입니다. 상세보기 정보가 없습니다.");
+  });
+});
 ```
 
-# 태그된 템플릿 리터럴
+---
+
+#### https://www.kobis.or.kr/kobisopenapi/homepg/main/main.do 영화진흥위원회 kobis api 데이터를 이용해 작성하였습니다.
+
+# DOMContentLoaded 이벤트
+
+window.addEventListener("DOMContentLoaded", (event) => {
+console.log("DOM fully loaded and parsed");
+});
+document.addEventListener("DOMContentLoaded", execkobis);
+//DOM 객체 생성 후 execkogix 함수 호출
+
+# kobis api (2/2)
+
+#### json파일 fetch로 연동하여 코드 줄이기
 
 ```
-let person = "hong";
-let age = 25;
-/* callbyvalue 값을 바로 가져옴 따라서 heap에 생성되지않음  */
+const getKobis = async () => {
+  await fetch(
+    "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=20060906"
+  )
+    .then((response) => response.json())
+    .then((kobis) => {
+      console.log(kobis);
+      //일별 박스오피스 출력 - 영화순위,영화제목, 개봉일,누적관객수,누적매출액
+      let movieList = kobis.boxOfficeResult.dailyBoxOfficeList;
+      let movieBox = document.querySelector(".movie-box");
+      movieList.map((v) => {
+        let { rank, movieNm, openDt, audiAcc, salesAcc, rankOldAndNew, rankInten } = v;
+        let newOld = rankOldAndNew == "NEW" ? "신규" : "기존";
+        let rankUpDown = rankInten > 0 ? `+${rankInten}` : `${rankInten}`;
 
-function myTag(strings, personName, personAge) {
-  //strings : ['That ',' is a',' !!']
-  let str = strings[1]; //'is a'
-  let ageStr;
+        return movieBox.insertAdjacentHTML(
+          "beforeend",
+          `
+    <div class="card" style="width: 18rem;">
+    <p class="card-img-top">${kobis.boxOfficeResult.boxofficeType}</p>
+    <div class="card-body">
+      <h5 class="card-title"><strong>${newOld} ${rank}위</strong>(${rankUpDown})</h5>
+     <h4 class='title-line'> ${movieNm}</h4>
+      <p class="card-text"><p><strong>개봉일</strong> : ${openDt}</p>
+    <p><strong>누적관객</strong> : ${audiAcc}명</p>
+      <p><strong>누적매출</strong> : ${salesAcc}원</p></p>
+      <a href="#" class="btn btn-primary">영화상세보기</a>
+    </div>
+  </div>
+  `
+        );
+      });
 
-  personAge > 50 ? (ageStr = "grandPa") : (ageStr = "youngster");
-
-  return personName + str + ageStr;
-}
-
-let sentence = myTag`That ${person} is a ${age}!!`;
-console.log(sentence); //hong is a youngster
+      document.querySelectorAll(".btn").forEach((v) => {
+        v.addEventListener("click", () => {
+          alert("연습용 페이지입니다. 상세보기 정보가 없습니다.");
+        });
+      });
+    });
+  // .catch();
+};
+getKobis();
 ```
