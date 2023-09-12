@@ -137,3 +137,29 @@ getResult().then((result) => {
   console.log(result);
 });
 ```
+
+### git 연습
+
+브랜치만드는법 (master 이후)
+마스터에서
+$git checkout -b develop
+$git push --set-upstream origin develop (위에뜨는거 복붙하면됨)
+
+---마스터브랜치 잠그기
+Lock branch
+pull request(코드업로드동의후에 업로드가능한옵션)
+
+---팀원
+깃허브 페이지에서 내이름으로 된 페이지만들기
+복사 후 git clone한 파일에서
+git fetch origin
+git checkout 브랜치명
+
+작업완료후 )acp
+
+올라가면 pull request 만들기
+
+충돌날경우)
+커맨드라인을 활용
+(git checkout -
+적으면 직전브랜치로이동)
