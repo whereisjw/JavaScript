@@ -78,14 +78,19 @@ function showMovieContent(mcontent) {
   console.log(movieNm);
 
   document.querySelector(".movie-box").innerHTML = `
-  <p>제목 ${movieNm}(${movieNmEn})</p>
- <p> 상영시간 ${showTm}분</p>
-<p>  개봉일 ${openDt}</p>
-<button class='뒤로가기'>뒤로가기 버튼</button>
+
+ <div class='detail-section'>
+    
+        <p>제목 ${movieNm}(${movieNmEn})</p>
+       <p> 상영시간 ${showTm}분</p>
+      <p>  개봉일 ${openDt}</p>
+      <button class='back-button'>뒤로가기 버튼</button>
+    
+ </div>
+
   `;
-}
-document.querySelector(".뒤로가기").addEventListener("click", () => {
-  document.querySelectorAll(".card").forEach((v) => {
-    v.style.display = "block";
+  document.querySelector(".detail-section button").addEventListener("click", (e) => {
+    console.log("tt");
+    document.querySelector(".detail-section").style.display = "none";
   });
-});
+}
