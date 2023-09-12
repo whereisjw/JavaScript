@@ -18,7 +18,7 @@ const getKobis = async (date = "20230907") => {
       let movieList = kobis.boxOfficeResult.dailyBoxOfficeList;
       let movieBox = document.querySelector(".movie-box");
       movieList.map((v) => {
-        let { rank, movieNm, openDt, audiAcc, salesAcc, rankOldAndNew, rankInten } = v;
+        let { rank, movieNm, openDt, audiAcc, salesAcc, rankOldAndNew, rankInten, movieCd } = v;
         let newOld = rankOldAndNew == "NEW" ? "신규" : "기존";
         let rankUpDown = rankInten > 0 ? `+${rankInten}` : `${rankInten}`;
 
@@ -33,20 +33,26 @@ const getKobis = async (date = "20230907") => {
       <p class="card-text"><p><strong>개봉일</strong> : ${openDt}</p>
     <p><strong>누적관객</strong> : ${audiAcc}명</p>
       <p><strong>누적매출</strong> : ${salesAcc}원</p></p>
-      <a href="#" class="btn btn-primary">영화상세보기</a>
+      <a href="#" id=${movieCd} class="btn btn-primary">영화상세보기</a>
     </div>
   </div>
   `
-        );
-      });
-
-      document.querySelectorAll(".btn").forEach((v) => {
-        v.addEventListener("click", () => {
-          alert("연습용 페이지입니다. 상세보기 정보가 없습니다.");
+        ); //insertAdjacentHTML
+      }); //map
+      //클래스를 가지고있는테그요소가져오기 >> querySelectorAll(클래스명)
+      //for를 이용하여 요소 반환 후이벤트 적용
+      let btns = document.querySelectorAll(".btn");
+      btns.forEach((v) => {
+        v.addEventListener("click", (e) => {
+          // alert(v.getAttribute("id"));
+          //상세정보를 가지고 있는 api를 호출
+          document.querySelectorAll(".card").forEach((v) => {
+            v.style.display = "hidden";
+          });
+          console.log(kobisContent(v.getAttribute("id")));
         });
       });
-    });
-  // .catch();
+    }); //kobis
 };
 getKobis();
 document.querySelector(".dateInput").addEventListener("input", () => {
@@ -55,4 +61,31 @@ document.querySelector(".dateInput").addEventListener("input", () => {
   dateInput = dateInput.length == 8 ? dateInput : false;
 
   getKobis(dateInput);
+});
+
+function kobisContent(movieCd) {
+  fetch(
+    ` http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=${movieCd}`
+  )
+    .then((response) => response.json())
+    .then(showMovieContent);
+}
+
+function showMovieContent(mcontent) {
+  // alert(JSON.stringify(mcontent));
+  let movieInfo = mcontent.movieInfoResult.movieInfo;
+  let { movieNm, movieNmEn, showTm, openDt } = movieInfo;
+  console.log(movieNm);
+
+  document.querySelector(".movie-box").innerHTML = `
+  <p>제목 ${movieNm}(${movieNmEn})</p>
+ <p> 상영시간 ${showTm}분</p>
+<p>  개봉일 ${openDt}</p>
+<button class='뒤로가기'>뒤로가기 버튼</button>
+  `;
+}
+document.querySelector(".뒤로가기").addEventListener("click", () => {
+  document.querySelectorAll(".card").forEach((v) => {
+    v.style.display = "block";
+  });
 });

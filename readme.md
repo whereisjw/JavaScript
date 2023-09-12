@@ -1,225 +1,139 @@
-# spread syntax - 배열의 결합
+# 프로미스
+
+<img src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F999DB3485C3214E122' alt/>
+https://new93helloworld.tistory.com/358
+
+#### 위 그림은 callstack이 하나이기 때문에 싱글쓰레드라고 한다
+
+callstack을 거치지 않고 webAPI에서 시간이 지난 후task queue(callback queue 또는 event queue)을 거쳐 처리를 하는 방식을 비동기식이라고 한다.
+
+### callstack
 
 ```
-const veggie = ["tomato", "cucumber", "beans"];
-const meat = ["pork", "beef", "chicken"];
-const menu = [...veggie, "pasta", ...meat];
-//"tomato", "cucumber", "beans","pasta","pork", "beef", "chicken"
-console.log(menu);
-
-```
-
-# 배열의 복사 - 기존 배열의 참조
-
-```
-const veggie = ["tomato", "cucumber", "beans"];
-const newVeggie = veggie;
-
-veggie.push("peas");
-
-console.log(veggie);
-console.log(newVeggie);
-
-// [ 'tomato', 'cucumber', 'beans', 'peas' ]
-// [ 'tomato', 'cucumber', 'beans', 'peas' ]
-```
-
-veggie 복사본을 생성한 것처럼 보이지만, 다음을 확인
-M.H 에 같은 주소 값을 가지기 때문에 같은 결과가 나온다.
-
-#### ES5 및 이전 버전에서의 배열 복사
-
-```
-const veggie = ["tomato", "cucumber", "beans"];
-const newVeggie = [].concat(veggie); //빈 배열 생성, 기존 배열의 값을 새 배열에 잇기
-veggie.push("peas");
-console.log(veggie); //[ 'tomato', 'cucumber', 'beans', 'peas' ]
-console.log(newVeggie); //[ 'tomato', 'cucumber', 'beans' ]
-```
-
-#### ES6 스프레드 문법으로 배열 복사
-
-```
-const veggie2 = ["tomato", "cucumber", "beans"];
-const newVeggie2 = [...veggie2]; //빈 배열 생성, 기존 배열의 값을 새 배열에 잇기
-veggie2.push("peas");
-console.log("---------------------------------------------->");
-console.log(veggie2); //[ 'tomato', 'cucumber', 'beans', 'peas' ]
-console.log(newVeggie2); //[ 'tomato', 'cucumber', 'beans' ]
-```
-
-# 함수와 스프레드 연산자
-
-#### 기존 방식
-
-```
-function doSuff(x, y, z) {
-console.log(x + y + z);
-}
-var args = [0, 1, 2];
-doSuff.apply(null, args); //함수 호출, 인수 전달 : //3(0+1+2)
-```
-
-#### 스프레드 문법
-
-```
-doSuff(...args); //3(0+1+2)
-console.log(args);
-```
-
-#### 함수와 스프레드 연산자
-
-```
-const name = ["Alberto", "Montalesi"];
-function greet(first, last) {
-console.log(`Hello~ ${first} ${last}`);
+function a() {
+  // memory heap에 보관
+  return 1;
 }
 
-
-greet(...name); //Hello~ Alberto Montalesi
-
-//지정된 인수보다 더 많은 값을 제공하면 어떻게 될까?
-const name2 = ["Jon", "Paul", "Jones"];
-function greet(first, last) {
-console.log(`Hello~ ${first} ${last}`);
+function b() {
+  // memory heap에 보관
+  return a() + 1;
 }
 
-greet(...name2); //Hello~ Jon Paul
+function c() {
+  // memory heap에 보관
+  return b() + 1;
+}
+
+const result = c(); // 함수 c를 호출
+console.log(result);
 ```
 
-#### 객체 리터럴과 스프레드
+쓰레드가 쌓인 걸 순차적으로 처리 동기식 처리
+
+### callback
 
 ```
-let person = {
-name: "Alberto",
-surname: "Montalesi",
-age: 30,
-};
+function execute(callback, seconds) {
+  console.log("1");
+  setTimeout(callback, seconds);
+  console.log("3");
+}
 
-let clone = { ...person };
-console.log(clone);
-
-//person 속성 추가
-person.addr = "gangnam";
-
-console.log(person);
-console.log(clone);
+execute(() => {
+  console.log("2");
+}, 2000);
 ```
 
-#### /\*_ 레스트 매개변수 _/
+결과는 1 3이 바로 출력되고 2초 후 2가 출력된다.
+2는 webapi에서 이벤트큐,이벤트루프를 거쳐서 콜스택으로 오게된다.
+
+### callback 테스트
 
 ```
-const runners = ["Tom", "Paul", "Mark", "Luke"];
-const [first, second, ...losers] = runners;
+//주어진 second(초)가 지나면 callback 함수를 호출함
+//단, seconds가 0보다 작으면 에러 출력
+//콘솔로그에 '타이머 종료!!'를 출력
 
-/* 배열로압축 rest연산자 */
-console.log(...losers);
-/*새로운배열로 만들어준다 spread */
-```
+/* function test() {
+  setTimeout(() => {
+    console.log("타이머 종료!!");
+  }, 2000);
+}
+test();
+ */
 
-# 변수를 키/값으로 하는 객체 만들기
-
-```
-const name = "Alberto";
-const surname = "Montalesi";
-const age = 20;
-const nationality = "Italian";
-
-//ES5
-const person = {
-  name: name,
-  surname: surname,
-  age: age,
-  nationality: nationality,
-};
-
-//ES6
-const person2 = { name, surname, age, nationality };
-
-console.log(person);
-console.log("----------------------------------------------");
-console.log(person2);
-```
-
-# 객체에 함수 추가하기
-
-```
-//ES5
-const person = {
-  name : "hong",
-  greet : function(){
-      console.log("Hello~~");
+function excuteTimer(콜백함수, 시간) {
+  if (!시간 || 시간 < 0) {
+    throw new Error("seconds가 0보다 작습니다.");
   }
-};
 
-person.greet();
+  setTimeout(콜백함수, 시간 * 1000);
+}
 
-//ES6
-const person2 = {
-  name : "홍길동",
-  greet(){
-      console.log("Hello2~~");
-  }
-};
-
-person2.greet();
+try {
+  excuteTimer(() => {
+    console.log("타이머 종료!!");
+  }, -1);
+} catch (error) {
+  console.log("에러발생:seconds값이 0보다 작음");
+}
 ```
 
-# 객체에 함수 추가하기
+# Promise
 
-#### ES5
+#### 비동기식으로 처리되는 코드를 대신 실행시켜줌
 
-```
-const person = {
-  name: "hong",
-  greet: function () {
-    console.log("Hello~~");
-  },
-};
-
-person.greet();
-```
-
-#### ES6
+# async의 이점
 
 ```
-const person2 = {
-  name: "홍길동",
-  greet() {
-    console.log("Hello2~~");
-  },
-  greet2: () => {
-    console.log("Hello2~~arrow function");
-  },
-};
-
-person2.greet();
-person2.greet2();
+function getHtml() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("HTML");
+    }, 1000);
+  });
+}
+function getCSS() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("CSS");
+    }, 1000);
+  });
+}
+function getJS() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("JS");
+    }, 1000);
+  });
+}
 ```
 
-# symbol
-
-### 심벌의 고유성
+위 함수들을 출력할때
 
 ```
-const me = Symbol("Alberto");
-console.log(me);
+getHtml().then((html) => {
+  getCSS().then((css) => {
+    getJS().then((js) => {
+      console.log([html, css, js]);
+    });
+  });
+});
 ```
 
-### 원시데이터를 가지고있는 상수형객체
-
-### 같은 값을 가진 새로운 심벌을 만들면 어떻게 될까?
-
-첫글자가 대문자면 빌트인 class
+위와 같이 then을 써서 출력이 가능하다.
 
 ```
-const clone = Symbol("Alberto");
-console.log(clone);
-```
+async function getResult() {
+  const html = await getHtml();
+  const css = await getCSS();
+  const js = await getJS();
 
-#### 심벌 비교
+  return [html, css, js];
+}
 
-```
-console.log(me == clone); //false
-console.log(me === clone); //false
+getResult().then((result) => {
+  console.log(result);
+});
 ```
