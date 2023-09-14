@@ -1,165 +1,66 @@
-# 프로미스
+# 1
 
-<img src='https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F999DB3485C3214E122' alt/>
-https://new93helloworld.tistory.com/358
+----주소검색 api -------
+![Alt text](image-2.png)
 
-#### 위 그림은 callstack이 하나이기 때문에 싱글쓰레드라고 한다
+https://postcode.map.daum.net/guide
+다음 주소검색 api
+키값별도로 필요없음 무료로 사용가능
 
-callstack을 거치지 않고 webAPI에서 시간이 지난 후task queue(callback queue 또는 event queue)을 거쳐 처리를 하는 방식을 비동기식이라고 한다.
+# 2 Scope
 
-### callstack
+Jascript:ES6(ECMA Script 6)
+ECMA ?1995년에 자바스크립트를 만들어졌을때 넷스케이프에서 만들어졌지만 다른회사랑 표준규약을 맞추기위해 정의를 함
+1)Basic(문법) - let,const
+function,class,iterator,...
+2)Advance(내부구현) - Scope,Hoisting,Closer,Prototype..
+
+### \*Scope란 ?
+
+#### -식별자(변수,함수,클래스 등)의 유효한 범위,영역
+
+#### -변수를 참조할 수 있는 유효한 범위, 영역
+
+#### -스코프정의 - {} (블럭) 정의 단위로 정의됨
+
+#### -블럭 : 블럭({}),함수(function a(){}),제어문(for{},if{})
+
+#### -블럭 내부에서 블럭 외부의 변수를 참조가능,
+
+#### -블럭 외부에서 블럭 내부의 변수는 참조 불가능
 
 ```
-function a() {
-  // memory heap에 보관
-  return 1;
+scope.js
+----------
+const a = 200; // 글로벌(전역) 변수 scope.js끝날때까지 유효함
+{
+  const a = 100; //로컬(멤버)변수 블럭이 끝날때까지만 유효함
+  console.log(a); // 100이 출력
 }
 
-function b() {
-  // memory heap에 보관
-  return a() + 1;
+console.log(a); // 200이 출력
+```
+
+### 만약에 a = 100 값이 블럭안에서 선언되지 않았다면?
+
+```
+const a = 200; // 글로벌(전역) 변수 scope.js끝날때까지 유효함
+{
+  console.log(a); // 200이 출력
 }
 
-function c() {
-  // memory heap에 보관
-  return b() + 1;
+console.log(a); // 200이 출력
+```
+
+블럭밖의 전역변수 a의 값을 참조해서 출력한다
+
+### 만약에 전역변수값이 없고 블럭안의 로컬변수만 있었다면 ?
+
+```
+{
+  const a = 100; //로컬(멤버)변수 블럭이 끝날때까지만 유효함
+  console.log(a); // 100이 출력
 }
 
-const result = c(); // 함수 c를 호출
-console.log(result);
+console.log(a); // 정의되지 않음
 ```
-
-쓰레드가 쌓인 걸 순차적으로 처리 동기식 처리
-
-### callback
-
-```
-function execute(callback, seconds) {
-  console.log("1");
-  setTimeout(callback, seconds);
-  console.log("3");
-}
-
-execute(() => {
-  console.log("2");
-}, 2000);
-```
-
-결과는 1 3이 바로 출력되고 2초 후 2가 출력된다.
-2는 webapi에서 이벤트큐,이벤트루프를 거쳐서 콜스택으로 오게된다.
-
-### callback 테스트
-
-```
-//주어진 second(초)가 지나면 callback 함수를 호출함
-//단, seconds가 0보다 작으면 에러 출력
-//콘솔로그에 '타이머 종료!!'를 출력
-
-/* function test() {
-  setTimeout(() => {
-    console.log("타이머 종료!!");
-  }, 2000);
-}
-test();
- */
-
-function excuteTimer(콜백함수, 시간) {
-  if (!시간 || 시간 < 0) {
-    throw new Error("seconds가 0보다 작습니다.");
-  }
-
-  setTimeout(콜백함수, 시간 * 1000);
-}
-
-try {
-  excuteTimer(() => {
-    console.log("타이머 종료!!");
-  }, -1);
-} catch (error) {
-  console.log("에러발생:seconds값이 0보다 작음");
-}
-```
-
-# Promise
-
-#### 비동기식으로 처리되는 코드를 대신 실행시켜줌
-
-# async의 이점
-
-```
-function getHtml() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("HTML");
-    }, 1000);
-  });
-}
-function getCSS() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("CSS");
-    }, 1000);
-  });
-}
-function getJS() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("JS");
-    }, 1000);
-  });
-}
-```
-
-위 함수들을 출력할때
-
-```
-getHtml().then((html) => {
-  getCSS().then((css) => {
-    getJS().then((js) => {
-      console.log([html, css, js]);
-    });
-  });
-});
-```
-
-위와 같이 then을 써서 출력이 가능하다.
-
-```
-async function getResult() {
-  const html = await getHtml();
-  const css = await getCSS();
-  const js = await getJS();
-
-  return [html, css, js];
-}
-
-getResult().then((result) => {
-  console.log(result);
-});
-```
-
-### git 연습
-
-브랜치만드는법 (master 이후)
-마스터에서
-$git checkout -b develop
-$git push --set-upstream origin develop (위에뜨는거 복붙하면됨)
-
----마스터브랜치 잠그기
-Lock branch
-pull request(코드업로드동의후에 업로드가능한옵션)
-
----팀원
-깃허브 페이지에서 내이름으로 된 페이지만들기
-복사 후 git clone한 파일에서
-git fetch origin
-git checkout 브랜치명
-
-작업완료후 )acp
-
-올라가면 pull request 만들기
-
-충돌날경우)
-커맨드라인을 활용
-(git checkout -
-적으면 직전브랜치로이동)
